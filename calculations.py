@@ -10,7 +10,7 @@ def predict(w, x):
 
 
 def log_likelihood(X, Y, w, sigma):
-    return np.sum(np.log(sigmoid(Y * np.dot(X, w)))) - sigma/2 * np.dot(w, w)
+    return np.sum(np.log(sigmoid(Y * np.dot(X, w)))) - (sigma/2) * np.dot(w, w)
 
 
 def gradient(X, Y, w, sigma):
@@ -44,16 +44,17 @@ def correct(X, Y, w):
     return total * 1.0 / len(X)
 
 
-def train(X, Y, sigma):
+def train(X, Y, sigma, learning):
     def f(w):
-        return -log_likelihood(X, Y, w, sigma)
+        return -(log_likelihood(X, Y, w, sigma))
 
     def fprime(w):
-        return -gradient(X, Y, w, sigma)
+        return -(gradient(X,Y,w,sigma))
 
     K = X.shape[1]
     initial_guess = np.zeros(K)
 
     w_vector = scipy.optimize.fmin_bfgs(f, initial_guess, fprime, gtol=.00001, disp=False)
+
     return w_vector
 
