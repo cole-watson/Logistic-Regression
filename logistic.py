@@ -33,23 +33,24 @@ def main():
     x_train, y_train = dict_array(training_data, headers, class_name)
 
     #convert arrays to np arrays
-    x_train = np.array(x_train)
-    y_train = np.array(y_train)
+    x_train = np.array(x_train, dtype=np.int64)
+    y_train = np.array(y_train, dtype=np.int64)
 
     x_test, y_test = dict_array(test_data, headers, class_name)
 
     #convert arrays to np arrays
-    x_test = np.array(x_test)
-    y_test = np.array(y_test)
+    x_test = np.array(x_test, dtype=np.int64)
+    y_test = np.array(y_test, dtype=np.int64)
 
     w = train(x_train, y_train, sigma, learning)
 
-    for i in range(0,len(w)):
-        print(headers[i] + " " + str(w[i]))
+    model = open(sys.argv[5], "wt")
+    for i in range(0, len(w)):
+        model.write(headers[i] + " " + str(w[i]) + "\n")
 
     percentage = correct(x_test, y_test, w) * 100
 
-    print ("Percent Correct: " +  str(percentage) + "%")
+    print ("Percent Correct: " + str(percentage) + "%")
 
 if __name__ == "__main__":
     main()
